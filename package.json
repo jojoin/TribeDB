@@ -1,0 +1,36 @@
+﻿{
+  "name": "tribedb",
+  "version": "0.0.1",
+  "description": "Unlimited expansion MySQL cluster storage system",
+  "homepage": "http://tribedb.jojoin.com/",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "node-mysql": ">=2.5.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yangjiePro/TribeDB.git"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mysql",
+    "cluster",
+    "tribe",
+    "db"
+  ],
+  "author": {
+    "name": "杨捷",
+    "email": "yangjie@jojoin.com",
+    "url": "http://jojoin.com/user/1/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangjiePro/TribeDB/issues"
+  }
+}
