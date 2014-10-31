@@ -1,6 +1,6 @@
 ﻿{
   "name": "tribedb",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Unlimited expansion MySQL cluster storage system",
   "homepage": "http://tribedb.jojoin.com/",
   "main": "index.js",
