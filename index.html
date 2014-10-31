@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>TribeDB - MySQL分表分库数据中间件</title>
     <link rel='stylesheet' href='style.css'>
   </head>
   <body>
     <h1>TribeDB</h1>
-    <p>Move.js is a small JavaScript library making CSS3 backed animation
-    extremely simple and elegant.</p>
+    <p>TribeDB 是一个MySQL分表分库数据中间件。它包含以下主要特性:</p>
+    <ul>
+      <li>通过全局唯一的表名路由连接分库，自动维护数据库连接池</li>
+      <li>支持数据表的“横向”和“纵向”分表</li>
+      <li>多数据节点并行处理，让数据操作总速度成倍提升</li>
+      <li>对应用层隐藏数据位置及技术细节</li>
+    </ul>
 
     <h2>Examples</h2>
 
