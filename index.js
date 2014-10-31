@@ -5,8 +5,8 @@
  * 采用分库分表的方式，在处理海量数据时获得更加优越的性能。
  * 
  * Github    ：https://github.com/yangjiePro/TribeDB
- * Home Page ：http://tribedb.jojoin.com
- * API docs  ：http://docs.tribedb.jojoin.com
+ * Home Page ：http://yangjiePro.github.com/TribeDB
+ * API docs  ：http://yangjiePro.github.com/TribeDB
  * 
  * * * *【依赖】* * * *
  * 
