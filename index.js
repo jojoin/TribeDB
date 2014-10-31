@@ -26,26 +26,6 @@
  */
 
 
-/********调试函数*********/
-
-
-// 全局 die
-global.die = function(stuff){
-	if(stuff!==undefined){
-		console.log(stuff);
-	}
-	process.exit(1);
-}
-// 全局 log
-global.log = function(stuff){
-	console.log(stuff);
-}
-
-/***************************/
-
-
-
-
 // 加载工具方法
 var util = require('./lib/util.js');
 var config = require('./lib/config.js');
@@ -62,7 +42,7 @@ var partition = require('./lib/mysql/partition.js');
 //配置
 exports.configure = config.load;
 
-exports.configure.key = config.set;
+//exports.configure.key = config.set;
 
 //数据处理对象
 exports.createQuery = create.Create;
@@ -70,12 +50,31 @@ exports.createQuery = create.Create;
 //直接进行 sql 请求
 exports.query = pool.query;
 
-//直接进行 sql 请求
-exports.get_table_partition = partition.get_table_partition;
+//获得所有表分分区
+//exports.get_table_partition = partition.get_table_partition;
 
 //模式
-exports.mode = mode;
+//exports.mode = mode;
 
+
+
+
+/********调试函数*********
+
+
+// 全局 die
+global.die = function(stuff){
+	if(stuff!==undefined){
+		console.log(stuff);
+	}
+	process.exit(1);
+}
+// 全局 log
+global.log = function(stuff){
+	console.log(stuff);
+}
+
+***************************/
 
 
 
