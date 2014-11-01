@@ -20,6 +20,7 @@ h3 {
   padding: 5px 0;
   font-size: 18px;
   border-bottom: 3px solid #eee;
+  font-weight: bold;
 }
 
 .box {
@@ -51,20 +52,21 @@ a:hover {
 }
 
 .source {
+  margin: 0; padding: 0;
   font-family: monaco, monospace;
-  font-size: 12px;
-  color: #999;
+  font-size: 13px;
+  color: #000;
 }
 
 .example p {
   color: #333;
 }
 
-.example p code {
-  color: #999;
-  padding: 2px 5px;
+.example code {
+  color: #444;
+  padding: 5px 12px;
   border: 1px solid #eee;
-  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }
 
 #example-1 .box,

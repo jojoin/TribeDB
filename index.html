@@ -2,57 +2,51 @@
 <html lang="zh-CN">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>TribeDB - MySQL分表分库数据中间件</title>
+    <title>TribeDB - MySQL分表分库数据中间件 for Node.js</title>
+    <link href="http://cdn.bootcss.com/highlight.js/8.1/styles/atelier-forest.light.min.css" rel="stylesheet">
     <link rel='stylesheet' href='style.css'>
+
   </head>
   <body>
     <h1>TribeDB</h1>
-    <p>TribeDB 是一个MySQL分表分库数据中间件。它包含以下主要特性:</p>
+    <p>TribeDB 是一个MySQL分表分库数据中间件，实现MySQL数据的分布式集群储存管理。在处理海量数据、高并发访问时，获得更加优越的性能及横向扩展能力。它包含以下主要特性:</p>
     <ul>
-      <li>通过全局唯一的表名路由连接分库，自动维护数据库连接池</li>
+      <li>可伸缩、高扩展的架构</li>
+      <li>自动路由分库，维护数据库连接池</li>
       <li>支持数据表的“横向”和“纵向”分表</li>
-      <li>多数据节点并行处理，让数据操作总速度成倍提升</li>
+      <li>支持“一主多从”式读写分离</li>
+      <li>分布式并行处理，成倍提升性能</li>
       <li>对应用层隐藏数据位置及技术细节</li>
     </ul>
+    <p>拥有以上特点意味着，可随时通过增加普通级别数据库服务器的方式，方便地扩展整体系统性能，而无需修改业务层架构和代码。</p>
 
-    <h2>Examples</h2>
+    <a href="https://github.com/yangjiePro/TribeDB"><img style="position: fixed; top: 0; right: 0; border: 0;" src="fork.png" alt="Fork me on GitHub"></a>
 
-    <a href="https://github.com/yangjiePro/TribeDB"><img style="position: absolute; top: 0; right: 0; border: 0;" src="fork.png" alt="Fork me on GitHub"></a>
+    <div class="example">
+      <h3> 使用示例：</h3>
+        <pre class="source"><code>var tribe = require('tribedb');
+//载入配置文件
+tribe.configure('/path/to/tribe.conf');
 
-    <div id="examples">
-      <div id="example-1" class="example">
-        <h3>Move#set(prop, val)</h3>
-        <p>Set <em>prop</em> to <em>val</em>.</p>
-        <a href="#" class="play">Play</a>
-        <div class="sandbox">
-          <div class="box small"></div>
-        </div>
-        <pre class="source">
-          <code>
-move('#example-1 .box')
-  .set('margin-left', 200)
-  .end();
-          </code>
-        </pre>
-      </div>
+        </code></pre>
+    </div>
 
-      <div id="example-2" class="example">
-        <h3>Move#add(prop, val)</h3>
-        <p>Increment <em>prop</em> by <em>val</em>, where <em>val</em>
-          is an Number (click several times).</p>
-        <a href="#" class="play">Play</a>
-        <div class="sandbox">
-          <div class="box small"></div>
-        </div>
-        <pre class="source">
-          <code>
-move('#example-2 .box')
-  .add('margin-left', 200)
-  .end();
-          </code>
-        </pre>
-      </div>
 
+
+<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.1/highlight.min.js"></script>
+<script src="http://cdn.bootcss.com/highlight.js/8.1/languages/python.min.js"></script>
+
+<script type="text/javascript">
+
+  //hljs.configure({useBR: true});
+
+  $('code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
+
+</script>
 
 
   </body>
