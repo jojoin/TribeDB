@@ -8,7 +8,7 @@ var tribe = require('../index.js');
 
 
 //载入配置文件
-tribe.configure('./test.conf', function(err, conf){
+tribe.configure('./test.conf');
 
 	// console.log(err);
 	// console.log(conf);
@@ -141,8 +141,4 @@ tribe.configure('./test.conf', function(err, conf){
 
 	// console.log(db);
 	// console.log(sqls);
-
-
-});
-
 
