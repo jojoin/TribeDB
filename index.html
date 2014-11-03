@@ -24,8 +24,55 @@
     <a href="https://github.com/yangjiePro/TribeDB"><img style="position: fixed; top: 0; right: 0; border: 0;" src="fork.png" alt="Fork me on GitHub"></a>
 
     <div class="example">
+      <a name="menu"></a>
+      <h3>目录</h3>
+      <ul class="menu">
+        <li><a href="#example">快速上手</a></li>
+        <li><a href="#setup">安装</a>环境与依赖</li>
+        <li><a href="#configure">configure()</a>载入或返回配置</li>
+        <li><a href="#configure-format">配置文件</a>格式详解</li>
+        <li><a href="#query">query()</a>执行sql请求</li>
+        <li><a href="#createQuery">createQuery()</a>新建数据操作对象</li>
+        <ul>
+          <li><a href="#db-table">table()</a>设置要操作的数据表</li>
+          <li><a href="#db-columns">columns()</a>查询返回的字段</li>
+          <li><a href="#db-data">data()</a>插入或更新的数据</li>
+          <li><a href="#db-reset">reset()</a>重置数据操作对象</li>
+          <li class="line"></li>
+          <li><a href="#db-where">where()</a>查询条件</li>
+          <li><a href="#db-or_where">or_where()</a></li>
+          <li><a href="#db-where_in">where_in()</a></li>
+          <li><a href="#db-where_in">or_where_in()</a></li>
+          <li><a href="#db-where_not_in">where_not_in()</a></li>
+          <li><a href="#db-or_where_not_in">or_where_not_in()</a></li>
+          <li><a href="#db-where_between">where_between()</a>查找区间</li>
+          <li><a href="#db-where_not_between">where_not_between()</a></li>
+          <li><a href="#db-or_where_between">or_where_between()</a></li>
+          <li><a href="#db-or_where_not_between">or_where_not_between()</a></li>
+          <li class="line"></li>
+          <li><a href="#db-like">like()</a>模糊查找</li>
+          <li><a href="#db-or_like">or_like()</a></li>
+          <li><a href="#db-not_like">not_like()</a></li>
+          <li><a href="#db-or_not_like">or_not_like()</a></li>
+          <li class="line"></li>
+          <li><a href="#db-order_by">order_by()</a>排序</li>
+          <li><a href="#db-group_by">group_by()</a>分组</li>
+          <li><a href="#db-group_by">limit()</a>限制或分页</li>
+          <li class="line"></li>
+          <li><a href="#db-join">join()</a>分表联合请求</li>
+          <li class="line"></li>
+          <li><a href="#db-insert">insert()</a>数据储存</li>
+          <li><a href="#db-delete">delete()</a>数据删除</li>
+          <li><a href="#db-update">update()</a>数据更新</li>
+          <li><a href="#db-select">select()</a>数据查询</li>
+        </ul>
+      </ul>
+    </div>
+
+
+    <div class="example">
       <a name="example"></a>
-      <h3> 快速上手：</h3>
+      <h3>快速上手：</h3>
         <pre class="source"><code>
 var tribe = require('tribedb');
 //载入配置文件，sync选项为true 表示同步读取解析配置文件
@@ -53,8 +100,8 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
     一切都由 TribeDB 自动完成，业务层不必关心数据的位置。当数据库负载过高需要添加服务器时，只需简单修改配置文件而不必修改业务代码，甚至将整个架构推倒重来。继续阅读本文档详细了解如何使用。</p>
 
     <div class="example">
-      <a name="example"></a>
-      <h3> 快速上手：</h3>
+      <a name="setup"></a>
+      <h3>安装</h3>
     </div>
 
     <div class="example">

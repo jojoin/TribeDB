@@ -23,6 +23,23 @@ h3 {
   font-weight: bold;
 }
 
+ul{
+  list-style-type: circle;
+}
+
+ul ul{
+  list-style-type: disc;
+  padding:0; margin:0; margin-left: 16px;
+}
+
+ul.menu a{
+  margin-right: 8px;
+}
+
+ul.menu .line{
+  margin: 12px 0;  list-style-type: none; height: 0;
+}
+
 a {
   color: #00B5E2;
   text-decoration: none;
