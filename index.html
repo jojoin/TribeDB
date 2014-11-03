@@ -8,7 +8,7 @@
 
   </head>
   <body>
-    <h1>TribeDB</h1>
+    <h1>TribeDB - 分布式集群储存框架 - Node.js</h1>
     <p>TribeDB 是一个MySQL分表分库数据中间件，实现MySQL数据的分布式集群储存管理。在处理海量数据、高并发访问时，获得更加优越的性能及横向扩展能力。它包含以下主要特性:</p>
     <ul>
       <li>可伸缩、高扩展的架构</li>
@@ -16,9 +16,10 @@
       <li>支持数据表的“横向”和“纵向”分表</li>
       <li>支持“一主多从”式读写分离</li>
       <li>分布式并行处理，成倍提升性能</li>
-      <li>对应用层隐藏数据位置及技术细节</li>
+      <li>对应用层隐藏数据来源及技术细节</li>
     </ul>
-    <p>拥有以上特点意味着，可随时通过增加普通级别数据库服务器的方式，方便地扩展整体系统性能，而无需修改业务层架构和代码。</p>
+    <p>拥有以上特点意味着，可随时通过增加普通级别数据库服务器的方式，方便地扩展整体系统性能，而无需修改业务层架构和代码。理论上TribeDB的扩展能力上线在于主库单表插入性能和主从数据同步开销。通过合理设计“横向”和“纵向”分表和数据切分粒度，可轻松应对上亿级别的数据量和访问请求。</p>
+    <p>本文包含 TribeDB 详细API文档和对应的最优数据库设计建议。</p>
 
     <a href="https://github.com/yangjiePro/TribeDB"><img style="position: fixed; top: 0; right: 0; border: 0;" src="fork.png" alt="Fork me on GitHub"></a>
 
@@ -27,7 +28,23 @@
         <pre class="source"><code>var tribe = require('tribedb');
 //载入配置文件
 tribe.configure('/path/to/tribe.conf');
-
+//通过数据库表名建立查询请求
+var db = tribe.createQuery('my_table');
+//插入封装
+db.data({title:'标题'}).insert(function(err, data){
+  console.log(err);
+  console.log(data);
+});
+//查询封装
+db.where('title','标题').order_by('time','DESC').limit(1).select(function(err, data){
+  console.log(err);
+  console.log(data);
+});
+//不使用封装的操作，直接执行sql
+tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1;',function(err, data){
+  console.log(err);
+  console.log(data);
+});
         </code></pre>
     </div>
 
