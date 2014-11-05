@@ -104,7 +104,10 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
       <a name="setup"></a>
       <h3>安装</h3>
       <p>推荐采用 <a href="https://www.npmjs.org/search?q=tribedb" target="_black">NPM</a> 方式安装 TribeDB。也可以 <a href="https://github.com/yangjiePro/TribeDB/archive/master.zip" target="_black">下载源码</a>，但需要自己处理依赖。</p>
-      <pre class="source"><code>$ npm install tribedb</code></pre>
+      <pre class="source"><code>$ npm install tribedb
+
+#tribedb@0.1.1 node_modules\tribedb
+#└── mysql@2.5.2 (require-all@0.0.8, bignumber.js@1.4.1, readable-stream@1.1.13)</code></pre>
     </div>
 
     <div class="example">
@@ -130,6 +133,33 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
     <div class="example">
       <a name="configure-format"></a>
       <h3>配置文件格式详解</h3>
+      <pre class="source"><code>#示例配置文件
+[system]
+
+read_only   = no #yes/no
+master_only = no #yes/no
+
+[database]
+
+master:
+db1 = 127.0.0.1, 3306, root, password, my_db1
+db2 = 127.0.0.1, 3306, root, password, my_db2
+
+slave:
+db1 = 127.0.0.1, , root, , my_db11
+db1 = 127.0.0.2, , root, , my_db12
+
+[table]
+
+#分表分库
+db1:
+user = 10w, id
+post = 10w, id
+
+# 不分表但分库
+db2:
+mytable1; mytable2; mytable3; mytable4;
+      </code></pre>
     </div>
 
 
@@ -154,7 +184,12 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
 
 
 
-
+ <div class="footer">
+   <span>@ TribeDB - 2015</span>
+   <span>作者：<a href="http://jojoin.com/user/1">杨捷</a></span>
+   <span>Email：<a href=mailto:yangjie@jojoin.com>yangjie@jojoin.com</a></span>
+   <span>Github：<a href="https://github.com/yangjiePro/TribeDB">https://github.com/yangjiePro/TribeDB</a></span>
+ </div>
 
 
 <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>

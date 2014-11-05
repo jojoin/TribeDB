@@ -97,3 +97,16 @@ a:hover {
 #example-3 .box {
   margin-left: 100px;
 }
+
+
+.footer{
+  border-top: 3px solid #ddd;
+  background: #efefef;
+  margin-top: 25px;
+  padding: 15px;
+}
+
+
+.footer span{
+  display: inline-block; margin: 0 12px;
+}
