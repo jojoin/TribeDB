@@ -102,8 +102,10 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
 
 
     <div class="example">
-      <a name="setup"></a>
-      <h3>安装</h3>
+      <h3>
+        <a name="setup" href="#setup" title="锚链接">#</a>
+        安装
+      </h3>
       <p>推荐采用 <a href="https://www.npmjs.org/search?q=tribedb" target="_black">NPM</a> 方式安装 TribeDB。也可以 <a href="https://github.com/yangjiePro/TribeDB/archive/master.zip" target="_black">下载源码</a>，但需要自己处理依赖。</p>
       <pre class="source"><code>$ npm install tribedb
 
@@ -112,8 +114,11 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
     </div>
 
     <div class="example">
-      <a name="configure"></a>
-      <h3>configure([src], [opt], [callback])　载入或返回配置。</h3>
+      <h3>
+        <a name="configure" href="#configure" title="锚链接">#</a>
+        configure([src], [opt], [callback])　载入或返回配置。
+      </h3>
+      
       <div class="param">
         <p><em>src</em>=<var>[path]</var>：从文件路径读取配置。</p>
         <p><em>src</em>=<var>[url]</var>：从url读取配置。</p>
@@ -121,20 +126,23 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
         <p><em>src</em>=<var>undefined</var>：表示返回从本地读取或从网络下载的配置文件正文。</p>
       </div>
       <div class="param">
-        <p><em>opt</em><var>object</var>：配置选项（可省略）</p>
-        <p><em>opt.sync</em><var>boolen</var>：是否以同步方式读取解析配置文件。（注意：url加载配置时始终为异步方式）。</p>
+        <p><em>opt</em><var>[object]</var>：配置选项（可省略）</p>
+        <p><em>opt.sync</em><var>[boolen]</var>：是否以同步方式读取解析配置文件。（注意：url加载配置时始终为异步方式）。</p>
       </div>
       <div class="param">
-        <p><em>callback</em><var>function</var>：配置文件加载并解析完成后的回调</p>
+        <p><em>callback</em><var>[function]</var>：配置文件加载并解析完成后的回调</p>
       </div>
       <p>一般情况下，在Node.js程序启动时载入配置。当异步载入配置时，若立即调用数据操作函数将返回配置错误信息，需要等待配置加载并解析完成。
       </p>
     </div>
 
     <div class="example">
-      <a name="configure-format"></a>
-      <h3>配置文件格式详解</h3>
-      <pre class="source"><code>#示例配置文件
+      <h3>
+        <a name="configure-format" href="#configure-format" title="锚链接">#</a>
+        配置文件格式详解
+      </h3>
+      <p>示例配置文件：</p>
+      <pre class="source"><code>
 [system]
 
 read_only   = no #yes/no
@@ -161,6 +169,14 @@ post = 10w, id
 db2:
 mytable1; mytable2; mytable3; mytable4;
       </code></pre>
+      <p>配置文件大致分为三部分。一、系统配置；二、数据库配置；三、分表分库配置；下文将为每一项给出详细说明：</p>
+      <div class="param">
+        <p><em>[system]</em>：声明下文的配置为系统配置。默认为此，可省略。</p>
+      </div>
+      <div class="param">
+        <p><em>read_only</em><var>"%"</var>,<var>[string]</var>：是否设置数据库为只读模式。</p>
+        <p><em>master_only</em><var>"%"</var>,<var>[string]</var>：当配置读写分离时，只使用 master 服务器。</p>
+      </div>
     </div>
 
 
