@@ -145,7 +145,6 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
       <pre class="source"><code>
 [system]
 
-read_only   = %
 master_only = db1, db2 
 
 [database]
@@ -174,8 +173,10 @@ mytable1; mytable2; mytable3; mytable4;
         <p><em>[system]</em>：声明下文的配置为系统配置。默认为此，可省略。</p>
       </div>
       <div class="param">
-        <p><em>read_only</em><var>"%"</var>,<var>[string]</var>：设置“只读模式”的数据库。值为需要设置的数据库的名称(标识)，逗号隔开。此项可用于数据拷贝迁移或结构升级时，不影响读取访问。设置为<var>%</var>时所有库都为只读。</p>
-        <p><em>master_only</em><var>"%"</var>,<var>[string]</var>：对配置读写分离的数据库，只使用 master （主库）。（取值同上）</p>
+        <!--
+        <p><em>read_only</em><var>"%"</var>,<var>[string]</var>：设置“只读模式”的数据库。值为需要设置的数据库的名称(标识)，逗号隔开。此项可用于数据拷贝迁移或结构升级时，不影响读取访问。</p>
+        -->
+        <p><em>master_only</em><var>"%"</var>,<var>[string]</var>：对配置读写分离的数据库，只使用 master （主库）。值为要设置的数据库标识名称，逗号隔开。<var>%</var>表示对所有库有效。</p>
       </div>
     </div>
 
