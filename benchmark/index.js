@@ -8,7 +8,15 @@ var tribe = require('../index.js');
 
 
 //载入配置文件
-tribe.configure('./test.conf');
+var conf = tribe.configure('./test.conf',{sync: true});
+
+console.log(conf);
+
+return 
+
+
+
+
 
 	// console.log(err);
 	// console.log(conf);
