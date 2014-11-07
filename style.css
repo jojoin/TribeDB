@@ -27,7 +27,6 @@ h4 {
   padding: 5px 0;
   font-size: 14px;
   font-weight: bold;
-  margin-left: 10px;
 }
 
 h3 a,h4 a{
@@ -58,19 +57,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-.sandbox {
-  margin: 10px 0;
-  padding: 5px;
-  border: 1px solid #eee;
-}
-
-.source {
-  margin: 0; padding: 0;
-  font-family: monaco, monospace;
-  font-size: 13px;
-  color: #000;
 }
 
 .example p {
@@ -108,10 +94,20 @@ a:hover {
   padding: 0 5px; margin: 0 5px;
 }
 
-#example-1 .box,
-#example-2 .box,
-#example-3 .box {
-  margin-left: 100px;
+
+.example.indent h3 {
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom-width: 1px; 
+}
+
+.example.indent>h3,
+.example.indent>p,
+.example.indent>div,
+.example.indent>pre
+{
+  margin-left: 20px;
 }
 
 
