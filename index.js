@@ -53,6 +53,9 @@ exports.createQuery = create.Create;
 //直接进行 sql 请求
 exports.query = pool.query;
 
+//关闭所有连接，清除所有数据
+exports.destroy = pool.destroy;
+
 //获得所有表分分区
 //exports.get_table_partition = partition.get_table_partition;
 
@@ -62,7 +65,7 @@ exports.query = pool.query;
 
 
 
-/********调试函数*********
+/********调试函数*********/
 
 
 // 全局 die
@@ -77,7 +80,7 @@ global.log = function(stuff){
 	console.log(stuff);
 }
 
-***************************/
+/***************************/
 
 
 

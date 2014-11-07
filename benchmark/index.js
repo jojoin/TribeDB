@@ -10,12 +10,23 @@ var tribe = require('../index.js');
 //载入配置文件
 var conf = tribe.configure('./test.conf',{sync: true});
 
-console.log(conf);
-
-return 
+// console.log(conf);
 
 
+var db = tribe.createQuery('part');
 
+db.columns(['id as uid , count(*) , title as t']).select(function(err, data){
+
+	console.log(err);
+	console.log(data);
+
+
+	tribe.destroy();
+
+});
+
+
+return
 
 
 	// console.log(err);
@@ -27,10 +38,6 @@ return
 	// });
 
 	var db = tribe.createQuery('part');
-
-
-
-
 
 
 	db.data('title','修改标题').data('create_time',1234567).where_in('id',[2,5,12])
