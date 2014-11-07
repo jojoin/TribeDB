@@ -4,7 +4,7 @@ body {
   color: #8b8b8b;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-size: 33px;
   font-weight: normal;
   color: #333;
@@ -23,7 +23,14 @@ h3 {
   font-weight: bold;
 }
 
-h3 a{
+h4 {
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+h3 a,h4 a{
   color: #333;
 }
 
@@ -81,7 +88,7 @@ a:hover {
 
 .example p em{
   font-style: italic;
-  color: #333; padding: 0 5px;
+  color: #000; padding: 0 5px;
 }
 .example p var{
   font-style: normal;
@@ -94,6 +101,11 @@ a:hover {
   padding: 5px 12px;
   border: 1px solid #eee;
   border-radius: 3px;
+}
+
+.param code, code.inline{
+  display: inline-block;
+  padding: 0 5px; margin: 0 5px;
 }
 
 #example-1 .box,

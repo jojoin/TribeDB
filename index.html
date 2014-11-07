@@ -24,8 +24,9 @@
     <a href="https://github.com/yangjiePro/TribeDB"><img style="position: fixed; top: 0; right: 0; border: 0;" src="fork.png" alt="Fork me on GitHub"></a>
 
     <div class="example">
-      <a name="menu"></a>
-      <h3>目录</h3>
+      <h3>
+        目录：
+      </h3>
       <ul class="menu">
         <li><a href="#example">快速上手</a></li>
         <li><a href="#setup">安装</a>环境与依赖</li>
@@ -66,15 +67,18 @@
           <li><a href="#db-update">update()</a>数据更新</li>
           <li><a href="#db-select">select()</a>数据查询</li>
         </ul>
+        <li><a href="#destroy">destroy</a>关闭并销毁</li>
         <li><a href="#version">version</a>版本号</li>
       </ul>
     </div>
 
 
     <div class="example">
-      <a name="example"></a>
-      <h3>快速上手：</h3>
-        <pre class="source"><code>
+      <h3>
+        <a name="example" href="#example" title="锚链接">#</a>
+        快速上手：
+      </h3>
+      <pre class="source"><code>
 var tribe = require('tribedb');
 //载入配置文件，sync选项为true 表示同步读取解析配置文件
 tribe.configure('/path/to/tribe.conf',{sync:true});
@@ -116,7 +120,7 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
     <div class="example">
       <h3>
         <a name="configure" href="#configure" title="锚链接">#</a>
-        configure([src], [opt], [callback])　载入或返回配置。
+        configure([src], [opt], [callback])　载入或返回配置
       </h3>
       
       <div class="param">
@@ -143,10 +147,12 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
       </h3>
       <p>示例配置文件：</p>
       <pre class="source"><code>
+#系统配置
 [system]
 
 master_only = db1, db2 
 
+#数据库连接配置
 [database]
 
 master:
@@ -154,21 +160,21 @@ db1 = 127.0.0.1, 3306, root, password, my_db1
 db2 = 127.0.0.1, 3306, root, password, my_db2
 
 slave:
-db1 = 127.0.0.1, , root, , my_db11
-db1 = 127.0.0.2, , root, , my_db12
+db1 = 127.0.0.1, , root, , my_db3
+db1 = 127.0.0.2, , root, , my_db4
 
+#分表分库配置
 [table]
 
-#分表分库
 db1:
-user = 10w, id
-post = 10w, id
 
-# 不分表但分库
-db2:
-mytable1; mytable2; mytable3; mytable4;
+#分库不分表只需要列出表名，每行一个表
+category
+#分库，同时用id值以百万为区间切分数据
+user = 100w, id
+
       </code></pre>
-      <p>配置文件大致分为三部分：一、系统配置；二、数据库配置；三、分表分库配置；</p>
+      <p>配置文件分为三部分：一、系统配置；二、数据库配置；三、分表分库配置；</p>
       <p>格式说明：井号（#）右边直到行尾的内容，被视为注释全部忽略。半角分号（;）表示换行（被替换为换行符），用于把多行“短小”的配置放在一行中显示。竖杠（|）表示将本来应该在一行配置分开放在多行，用于把一行过长的配置换行书写。（竖杠左右两侧的空格和换行符都将被删除，可放行首或行尾）。所有空格、制表符等等空白符号将被全部删除忽略。</p>
       <p>配置每一项详细说明：</p>
       <div class="param">
@@ -184,10 +190,78 @@ mytable1; mytable2; mytable3; mytable4;
         <p><em>[database]</em>：声明下文的配置为数据库连接配置。</p>
       </div>
       <div class="param">
-        <p><em>master:</em>：声明下文的配置为主从复制主库（用于增删改），可不声明，默认为主库。仅支持单个主库。命名为<var>default</var>的数据库为默认数据库，当sql请求未指定数据库，和未指定所属库的数据表，默认使用的数据库。如果不存在命名为<var>default</var>的数据库，则使用最先配置的主库为默认。</p>
+        <p><em>master:</em>：声明下文的配置为主从复制主库（用于增删改），可不声明，默认为主库。仅支持单个主库。命名为<var>default</var>的数据库为<a name="configure-format-default">默认数据库</a>，当sql请求未指定数据库和未指定所属库的数据表默认使用的数据库。如果不存在命名为<var>default</var>的数据库，则最先配置的主库为默认。</p>
         <p><em>slave:</em>：声明下文的配置为主从复制从库（用于查）。必须有一个主库，才能配置一个或多个从库。所有从库的名称（标识）必须与对应主库相同。</p>
-        <p>　　• " db1 = 127.0.0.1, 3306, root, password, my_db1 "：等号左边的“db1”为数据库名称（标识），右边为逗号隔开的连接配置，依次为IP地址、端口号、用户名，密码，目标库名</p>
+        <p><em>db1 = 127.0.0.1, 3306, root, password, my_db1</em>：等号左边的“db1”为数据库名称（标识），右边为逗号隔开的连接配置，依次为IP地址、端口号、用户名，密码，目标库名</p>
       </div>
+      <div class="param">
+        <p><em>[table]</em>：声明下文的配置为分表分库配置。</p>
+      </div>
+      <div class="param">
+        <p><em>db1:</em>：[database] 中定义的数据库名（标识），声明下文定义的数据表位于本库中。未定义的表将视为位于默认数据库中。</p>
+        <p><em>category</em>：声明名为<var>category</var>的数据表位于数据库<var>db1</var>中。</p>
+        <p><em>user = 100w, id</em>：声明名为<var>user</var>的数据表位于数据库<var>db1</var>中。
+          通过<var>id</var>字段分表，以一百万为区间。分表字段类型必须为整型，默认为<var>id</var>，可省略。<var>100w</var>表示数据区间，而不是每个表的精确数据行数。</p>
+      </div>
+    </div>
+
+
+    <div class="example">
+      <h3>
+        <a name="query" href="#query" title="锚链接">#</a>
+        query(sql, [db], [callback])　执行 SQL 语句
+      </h3>
+      
+      <div class="param">
+        <p><em>sql</em><var>[string]</var>：要执行的 sql 语句。</p>
+        <p><em>db</em><var>[string]</var>：目标数据库名称（标识）。在<a href="#configure-format">配置文件</a>中定义。不传时使用<a href="#configure-format-default">默认数据库</a>。</p>
+        <p><em>callback</em><var>[function]</var>：sql执行完成后回调。<code>callback(err, data)</code>函数接受两个参数，<var>err</var>为可能出现的错误信息（无错则为null），<var>data</var>为执行成功的结果数据。</p>
+      </div>
+    </div>
+
+
+
+
+    <div class="example">
+      <h3>
+        <a name="createQuery" href="#createQuery" title="锚链接">#</a>
+        createQuery([table])　建立数据处理对象
+      </h3>
+      <div class="param">
+        <p><em>table</em><var>[string]</var>：要执行操作的数据表名。也可以稍后调用
+        <a href="#db-table"><code class="inline">table()</code></a>函数指定。</p>
+      </div>
+      <p><code class="inline">createQuery</code>新建并返回一个查询对象，包含一系列封装的方法，完成数据的增删改查操作。对象方法如下：</p>
+    </div>
+
+    <div class="example">
+      <h4>
+        <a name="db-table" href="#db-table" title="锚链接">#</a>
+        table(table)　指定进行操作的数据表
+      </h4>
+      <div class="param">
+        <p><em>table</em><var>[string]</var>：要执行操作的数据表名。</p>
+      </div>
+      <p>可在<a href="#createQuery"><code class="inline">createQuery()</code></a>指定数据表。</p>
+    </div>
+
+    <div class="example">
+      <h4>
+        <a name="db-columns" href="#db-columns" title="锚链接">#</a>
+        columns(columns)　指定进行操作的数据表
+      </h4>
+      <div class="param">
+        <p><em>columns</em>=<var>[string]</var>：查询时要返回的内容（包含字段名或统计等）。</p>
+        <p><em>columns</em>=<var>[array]</var>：字段名数组。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+#正确用法示例
+db.columns('count(*)')
+db.columns('id as uid , name')
+db.columns('id','name') #任意数量参数
+db.columns('id as uid','name')
+db.columns(['id','name as nick'])
+      </code></pre>
     </div>
 
 
@@ -212,8 +286,11 @@ mytable1; mytable2; mytable3; mytable4;
 
 
 
+
+
+
  <div class="footer">
-   <span>@ TribeDB - 2015</span>
+   <span>@ <a href="http://yangjiepro.github.io/TribeDB/">TribeDB</a> - 2015</span>
    <span>作者：<a href="http://jojoin.com/user/1">杨捷</a></span>
    <span>Email：<a href=mailto:yangjie@jojoin.com>yangjie@jojoin.com</a></span>
    <span>Github：<a href="https://github.com/yangjiePro/TribeDB">https://github.com/yangjiePro/TribeDB</a></span>
