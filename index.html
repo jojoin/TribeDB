@@ -248,17 +248,17 @@ user = 100w, id
     <div class="example indent">
       <h3>
         <a name="db-columns" href="#db-columns" title="锚链接">#</a>
-        columns(columns)　指定进行操作的数据表
+        columns(field)　指定进行操作的数据表
       </h3>
       <div class="param">
-        <p><em>columns</em>=<var>[string]</var>：查询时要返回的内容（包含字段名或统计等）。</p>
-        <p><em>columns</em>=<var>[array]</var>：字段名数组。</p>
+        <p><em>field</em>=<var>[string]</var>：查询时要返回的内容（包含字段名或统计等）。</p>
+        <p><em>field</em>=<var>[array]</var>：字段名数组。</p>
       </div>
       <pre class="source"><code>var db = createQuery('user');
-#正确用法示例
+// 正确用法示例
 db.columns('count(*)')
 db.columns('id as uid , name')
-db.columns('id','name') #任意数量参数
+db.columns('id','name') // 任意数量参数
 db.columns('id as uid','name')
 db.columns(['id','name as nick'])
       </code></pre>
