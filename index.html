@@ -38,7 +38,6 @@
           <li><a href="#db-table">table()</a>设置要操作的数据表</li>
           <li><a href="#db-columns">columns()</a>查询返回的字段</li>
           <li><a href="#db-data">data()</a>插入或更新的数据</li>
-          <li><a href="#db-reset">reset()</a>重置数据操作对象</li>
           <li class="line"></li>
           <li><a href="#db-where">where()</a>查询条件</li>
           <li><a href="#db-or_where">or_where()</a></li>
@@ -47,8 +46,8 @@
           <li><a href="#db-where_not_in">where_not_in()</a></li>
           <li><a href="#db-or_where_not_in">or_where_not_in()</a></li>
           <li><a href="#db-where_between">where_between()</a>查找区间</li>
-          <li><a href="#db-where_not_between">where_not_between()</a></li>
           <li><a href="#db-or_where_between">or_where_between()</a></li>
+          <li><a href="#db-where_not_between">where_not_between()</a></li>
           <li><a href="#db-or_where_not_between">or_where_not_between()</a></li>
           <li class="line"></li>
           <li><a href="#db-like">like()</a>模糊查找</li>
@@ -58,7 +57,7 @@
           <li class="line"></li>
           <li><a href="#db-order_by">order_by()</a>排序</li>
           <li><a href="#db-group_by">group_by()</a>分组</li>
-          <li><a href="#db-group_by">limit()</a>限制或分页</li>
+          <li><a href="#db-limit">limit()</a>限制或分页</li>
           <li class="line"></li>
           <li><a href="#db-join">join()</a>分表联合请求</li>
           <li class="line"></li>
@@ -66,6 +65,9 @@
           <li><a href="#db-delete">delete()</a>数据删除</li>
           <li><a href="#db-update">update()</a>数据更新</li>
           <li><a href="#db-select">select()</a>数据查询</li>
+          <li><a href="#db-select">count()</a>数据统计</li>
+          <li class="line"></li>
+          <li><a href="#db-reset">reset()</a>重置数据操作对象</li>
         </ul>
         <li><a href="#destroy">destroy</a>关闭并销毁</li>
         <li><a href="#version">version</a>版本号</li>
@@ -275,31 +277,233 @@ db.columns(['id','name as nick'])
       </div>
       <pre class="source"><code>var db = createQuery('user');
 // 正确用法示例：
-// 设置
-db.data({id: 1}) // {id:1} 
-// 追加
-db.data({key: "value"}, true) // {id:1, key: "value"}
-// 覆盖
-db.data({id: 2}) // {id:2}
-// 追加
-db.data("foo", "bar") // {id:2, foo: "bar"}
-// 删除
-db.data("foo", null) // {id:2}
-// 清空
-db.data(null) // {}
+db.data({id: 1})              // 设置 {id:1} 
+db.data({key: "value"}, true) // 追加 {id:1, key: "value"}
+db.data({id: 2})              // 覆盖 {id:2}
+db.data("foo", "bar")         // 追加 {id:2, foo: "bar"}
+db.data("foo", null)          // 删除 {id:2}
+db.data(null)                 // 清空 {}
       </code></pre>
     </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-where" href="#db-where" title="锚链接">#</a>
+        where(whe [, ...])　筛选条件
+      </h3>
+      <div class="param">
+        <p><em>whe</em>：筛选条件。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where("id", 1)              // WHERE id = 1
+db.where("id", 1, ">")         // WHERE id > 1
+db.where("id >", 1)            // WHERE id > 1
+db.where("id=1")               // WHERE id = 1
+db.where("id=1 or id=2")       // WHERE id = 1 OR id = 2
+db.where({id:1, num:2})        // WHERE id = 1 AND num = 2
+db.where({'id >':1, 'num':2})  // WHERE id > 1 AND num = 2
+db.where(null)                 // 清空所有条件
+      </code></pre>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_where" href="#db-or_where" title="锚链接">#</a>
+        or_where(whe [, ...])　WHERE OR 条件
+      </h3>
+      <div class="param">
+        <p><em>whe</em>：筛选条件。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.or_where("id", 1)              // WHERE id = 1 OR ...
+// 等同于：
+db.where("id", 1, '=', 'OR')
+      </code></pre>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-where_in" href="#db-where_in" title="锚链接">#</a>
+        where_in(field, list)　WHERE IN()条件
+      </h3>
+      <div class="param">
+        <p><em>field</em>：字段名。</p>
+        <p><em>list</em>：有效值列表。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where_in("id", [1,2])              // WHERE id IN(1,2)
+// 等同于：
+db.where("id in(1,2)")
+      </code></pre>
+    </div>
+
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_where_in" href="#db-or_where_in" title="锚链接">#</a>
+        or_where_in(field, list)　WHERE IN() OR 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-where_not_in" href="#db-where_not_in" title="锚链接">#</a>
+        where_not_in(field, list)　WHERE NOT IN() 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_where_not_in" href="#db-or_where_not_in" title="锚链接">#</a>
+        or_where_not_in(field, list)　WHERE NOT IN() OR 条件
+      </h3>
+    </div>
+
+
+    <div class="example indent">
+      <h3>
+        <a name="db-where_between" href="#db-where_between" title="锚链接">#</a>
+        where_between(field, min[, max])　WHERE BETWEEN AND 条件
+      </h3>
+      <div class="param">
+        <p><em>field</em>：字段名。</p>
+        <p><em>min</em>：起始值。</p>
+        <p><em>max</em>：总之值。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where_between("id", 1, 10)     // WHERE id BETWEEN 1 AND 10
+db.where_between("id", [1,10])    // WHERE id BETWEEN 1 AND 10
+// 等同于：
+db.where("id between 1 and 10")
+      </code></pre>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_where_between" href="#db-or_where_between" title="锚链接">#</a>
+        or_where_between(field, min[, max])　WHERE BETWEEN AND OR 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_where_between" href="#db-or_where_between" title="锚链接">#</a>
+        or_where_between(field, min[, max])　WHERE BETWEEN AND OR 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-where_not_between" href="#db-where_not_between" title="锚链接">#</a>
+        where_not_between(field, min[, max])　WHERE NOT BETWEEN AND 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_where_not_between" href="#db-or_where_not_between" title="锚链接">#</a>
+        or_where_not_between(field, min[, max])　WHERE NOT BETWEEN AND OR 条件
+      </h3>
+    </div>
 
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-like" href="#db-like" title="锚链接">#</a>
+        like(field, value)　WHERE LIKE 条件
+      </h3>
+      <div class="param">
+        <p><em>field</em>：字段名。</p>
+        <p><em>value</em>：匹配值。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.like('name', '%sam%')          // WHERE name LIKE "%sam%"
+db.like('name', 'sam', 'both')     // WHERE name LIKE "%sam%"
+db.like('name', 'sam', 'left')     // WHERE name LIKE "sam%"
+db.like('name', 'sam', 'right')    // WHERE name LIKE "%sam"
+// 等同于：
+db.where('name like "%sam%" ')
+      </code></pre>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_like" href="#db-or_like" title="锚链接">#</a>
+        or_like(field, value)　WHERE LIKE OR 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-not_like" href="#db-not_like" title="锚链接">#</a>
+        not_like(field, value)　WHERE NOT LIKE 条件
+      </h3>
+    </div>
+
+    <div class="example indent">
+      <h3>
+        <a name="db-or_not_like" href="#db-or_not_like" title="锚链接">#</a>
+        or_not_like(field, value)　WHERE NOT LIKE OR 条件
+      </h3>
+    </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-order_by" href="#db-order_by" title="锚链接">#</a>
+        order_by(field [, desc])　排序
+      </h3>
+      <div class="param">
+        <p><em>field</em>：字段名。</p>
+        <p><em>desc</em>：是否为降序。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.order_by('id')          // ORDER BY id
+db.order_by('id', true)    // ORDER BY id DESC
+db.order_by('id', 'DESC')    // ORDER BY id DESC
+db.order_by('id', 'ASC')    // ORDER BY id DESC 
+      </code></pre>
+    </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-group_by" href="#db-group_by" title="锚链接">#</a>
+        group_by(field)　分组
+      </h3>
+      <div class="param">
+        <p><em>field</em>：字段名。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.group_by('id')          // GROUP BY id
+      </code></pre>
+    </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-limit" href="#db-limit" title="锚链接">#</a>
+        limit([start], limit)　分页数量
+      </h3>
+      <div class="param">
+        <p><em>start</em>：开始位置。</p>
+        <p><em>limit</em>：数量。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.limit(1)          // LIMIT 1
+db.limit(2, 2)          // LIMIT 2, 2
+      </code></pre>
+    </div>
 
 
 
