@@ -12,6 +12,17 @@ var conf = tribe.configure('./test.conf',{sync: true});
 
 // console.log(conf);
 
+
+var db = tribe.createQuery('part');
+
+db.where({'id >':1,num:2});
+
+log(db._where);
+
+
+return
+
+
 db.columns(['id as uid , count(*) , title as t']).select(function(err, data){
 
 	console.log(err);
