@@ -12,9 +12,6 @@ var conf = tribe.configure('./test.conf',{sync: true});
 
 // console.log(conf);
 
-
-var db = tribe.createQuery('part');
-
 db.columns(['id as uid , count(*) , title as t']).select(function(err, data){
 
 	console.log(err);
