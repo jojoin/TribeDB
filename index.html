@@ -120,7 +120,7 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
     <div class="example">
       <h3>
         <a name="configure" href="#configure" title="锚链接">#</a>
-        configure([src], [opt], [callback])　载入或返回配置
+        configure([src, [opt], callback])　载入或返回配置
       </h3>
       
       <div class="param">
@@ -248,7 +248,7 @@ user = 100w, id
     <div class="example indent">
       <h3>
         <a name="db-columns" href="#db-columns" title="锚链接">#</a>
-        columns(field)　指定进行操作的数据表
+        columns(field [, ...])　指定进行操作的数据表
       </h3>
       <div class="param">
         <p><em>field</em>=<var>[string]</var>：查询时要返回的内容（包含字段名或统计等）。</p>
@@ -264,6 +264,31 @@ db.columns(['id','name as nick'])
       </code></pre>
     </div>
 
+
+    <div class="example indent">
+      <h3>
+        <a name="db-data" href="#db-data" title="锚链接">#</a>
+        data(data [, ...])　插入或修改数据
+      </h3>
+      <div class="param">
+        <p><em>data</em><var>[object]</var>：要插入或修改的数据。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+// 设置
+db.data({id: 1}) // {id:1} 
+// 追加
+db.data({key: "value"}, true) // {id:1, key: "value"}
+// 覆盖
+db.data({id: 2}) // {id:2}
+// 追加
+db.data("foo", "bar") // {id:2, foo: "bar"}
+// 删除
+db.data("foo", null) // {id:2}
+// 清空
+db.data(null) // {}
+      </code></pre>
+    </div>
 
 
 
