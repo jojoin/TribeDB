@@ -10,12 +10,12 @@ var tribe = require('../index.js');
 //载入配置文件
 var conf = tribe.configure('./test.conf',{sync: true});
 
-console.log(conf);
+// console.log(conf);
 
 
 var db = tribe.createQuery('part');
 
-db.data({title: "John"}).insert(function(err, data){
+db.where({title: "John"}).count(function(err, data){
   console.log(err);
   console.log(data);
   /*
@@ -29,7 +29,7 @@ db.data({title: "John"}).insert(function(err, data){
 	  changedRows: 0 }
 	*/
 },{
-  //sql: 1
+  // sql: 1
 });
 
 
