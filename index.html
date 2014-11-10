@@ -59,13 +59,13 @@
           <li><a href="#db-group_by">group_by()</a>分组</li>
           <li><a href="#db-limit">limit()</a>限制或分页</li>
           <li class="line"></li>
-          <li><a href="#db-join">join()</a>分表联合请求</li>
-          <li class="line"></li>
           <li><a href="#db-insert">insert()</a>数据储存</li>
           <li><a href="#db-delete">delete()</a>数据删除</li>
           <li><a href="#db-update">update()</a>数据更新</li>
           <li><a href="#db-select">select()</a>数据查询</li>
           <li><a href="#db-select">count()</a>数据统计</li>
+          <li class="line"></li>
+          <li><a href="#db-join">join()</a>分表联合请求</li>
           <li class="line"></li>
           <li><a href="#db-reset">reset()</a>重置数据操作对象</li>
         </ul>
@@ -543,13 +543,82 @@ db.data({name: "John"}).insert(function(err, data){
     </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-delete" href="#db-delete" title="锚链接">#</a>
+        delete([callback], [opt])　删除
+      </h3>
+      <div class="param">
+        <p><em>callback</em><var>[function]</var>：删除完成回调。与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+        <p><em>opt</em><var>[object]</var>：相关选项，与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where({name: 'John Smith'}).delete(function(err, data){
+  console.log(data);
+});
+      </code></pre>
+    </div>
 
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-update" href="#db-update" title="锚链接">#</a>
+        update([callback], [opt])　修改（更新）数据
+      </h3>
+      <div class="param">
+        <p><em>callback</em><var>[function]</var>：删除完成回调。与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+        <p><em>opt</em><var>[object]</var>：相关选项，与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where({name: 'John'}).data({name: 'John Smith'}).update(function(err, data){
+  console.log(data);
+});
+      </code></pre>
+    </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-select" href="#db-select" title="锚链接">#</a>
+        select([callback], [opt])　查询数据
+      </h3>
+      <div class="param">
+        <p><em>callback</em><var>[function]</var>：删除完成回调。与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+        <p><em>opt</em><var>[object]</var>：相关选项，与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where('name', 'John Smith').select(function(err, data){
+  console.log(data);
+  /*
+  [ { id: 1, name: 'John Smith', create_time: 0 } ]
+  */
+});
+      </code></pre>
+    </div>
 
 
+    <div class="example indent">
+      <h3>
+        <a name="db-count" href="#db-count" title="锚链接">#</a>
+        count([callback], [opt])　统计数据行数
+      </h3>
+      <div class="param">
+        <p><em>callback</em><var>[function]</var>：删除完成回调。<code>callback(err, data)</code>接受两个参数：<var>err</var>为解析或执行时可能出现的错误（无错则为null）。<var>data</var>为统计到的所有分表的数据条数之和（整数类型）。</p>
+        <p><em>opt</em><var>[object]</var>：相关选项，与<a href="#db-insert" title="锚链接">insert</a>相同。</p>
+      </div>
+      <p>此函数用于方便的统计数据行数。其内部为对<code class="inline">SELECT count(*) FROM ... WHERE ...</code>的封装</p>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.where({name: 'John Smith'}).count(function(err, num){
+  console.log(num);
+});
+      </code></pre>
+    </div>
+    
 
 
     <div class="example indent">
@@ -565,9 +634,6 @@ db.limit(1)          // LIMIT 1
 db.limit(2, 2)          // LIMIT 2, 2
       </code></pre>
     </div>
-
-
-
 
 
 
