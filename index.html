@@ -506,6 +506,52 @@ db.limit(2, 2)          // LIMIT 2, 2
     </div>
 
 
+
+    <div class="example indent">
+      <h3>
+        <a name="db-insert" href="#db-insert" title="锚链接">#</a>
+        insert([callback], [opt])　插入（新增）数据
+      </h3>
+      <div class="param">
+        <p><em>callback</em><var>[function]</var>：插入完成回调。<code>callback(err, data)</code>接受两个参数：<var>err</var>为解析或执行时可能出现的错误（无错则为null）。<var>data</var>操作成功后返回的数据。</p>
+        <p><em>opt</em><var>[object]</var>：相关选项。</p>
+        <p><em>opt.obj</em><var>[boolen]</var>：不执行插入操作，而返回查询处理对象。（可供调试）</p>
+        <p><em>opt.sql</em><var>[boolen]</var>：不执行插入操作，而返回拼装完成的 sql 语句。（可供调试）</p>
+        <p><em>opt.db</em><var>[boolen]</var>：不执行插入操作，而返回将要执行操作的数据库配置。 </p>
+      </div>
+      <pre class="source"><code>var db = createQuery('user');
+// 正确用法示例：
+db.data({name: "John"}).insert(function(err, data){
+  // console.log(err);
+  console.log(data);
+  /*
+  { fieldCount: 0,
+    affectedRows: 1,
+    insertId: 8,
+    serverStatus: 2,
+    warningCount: 1,
+    message: '',
+    protocol41: true,
+    changedRows: 0 }
+  */
+},{
+  //obj: true
+  //db: true
+  //sql: true
+});
+      </code></pre>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     <div class="example indent">
       <h3>
         <a name="db-join" href="#db-join" title="锚链接">#</a>
