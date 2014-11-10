@@ -15,6 +15,35 @@ var conf = tribe.configure('./test.conf',{sync: true});
 
 var db = tribe.createQuery('part');
 
+
+
+db.data({title: "John"}).join('jointb', {jointitle: "John"}).insert(function(err, data){
+  console.log(err);
+  console.log(data);
+  /*
+  { fieldCount: 0,
+	  affectedRows: 1,
+	  insertId: 8,
+	  serverStatus: 2,
+	  warningCount: 1,
+	  message: '',
+	  protocol41: true,
+	  changedRows: 0 }
+	*/
+},{
+  // obj: 1
+  // sql: 1
+});
+
+
+
+
+return
+
+
+
+
+
 db.where({title: "John"}).count(function(err, data){
   console.log(err);
   console.log(data);
