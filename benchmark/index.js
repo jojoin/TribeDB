@@ -13,14 +13,23 @@ var conf = tribe.configure('./test.conf',{sync: true});
 console.log(conf);
 
 
-var db = tribe.createQuery('user');
+var db = tribe.createQuery('part');
 
-db.data({name: "John"}).insert(function(err, data){
+db.data({title: "John"}).insert(function(err, data){
   console.log(err);
   console.log(data);
-  // INSERT INTO
+  /*
+  { fieldCount: 0,
+	  affectedRows: 1,
+	  insertId: 8,
+	  serverStatus: 2,
+	  warningCount: 1,
+	  message: '',
+	  protocol41: true,
+	  changedRows: 0 }
+	*/
 },{
-  sql: 1
+  //sql: 1
 });
 
 
