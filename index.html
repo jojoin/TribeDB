@@ -63,7 +63,7 @@
           <li><a href="#db-delete">delete()</a>数据删除</li>
           <li><a href="#db-update">update()</a>数据更新</li>
           <li><a href="#db-select">select()</a>数据查询</li>
-          <li><a href="#db-select">count()</a>数据统计</li>
+          <li><a href="#db-count">count()</a>数据统计</li>
           <li class="line"></li>
           <li><a href="#db-join">join()</a>分表联合请求</li>
           <li class="line"></li>
@@ -627,12 +627,33 @@ db.where({name: 'John Smith'}).count(function(err, num){
         join(table[, para ....])　纵向分表联合处理
       </h3>
       <p>TribeDB 不仅支持数据表的“横向”切分，还对“纵向”拆表的增删改查操作进行了封装。</p>
-      <p>假设将一个大的 user 表拆分成三个表：一、user 表储存头像昵称等常用数据；二、user_info 表储存用户简介、地域等不常用信息；三、user_conf 表储存用户的选项设置。</p>
-      <pre class="source"><code>var db = createQuery('user');
-// 正确用法示例：
-db.limit(1)          // LIMIT 1
-db.limit(2, 2)          // LIMIT 2, 2
-      </code></pre>
+      <p>假设将一个大的 user 表拆分成三个表：</p>
+      <p>一、user 表储存头像昵称等常用数据；二、user_info 表储存用户简介、地域等不常用信息；三、user_conf 表储存用户的选项设置。三个表都以 id 字段作为自增主键，实现关联。</p>
+      <pre class="source"><code>var db = createQuery('user');</code></pre>
+      <p>同时向三个表插入数据，并以字段 id 作为三个表的关联字段。可联合插入任意熟练的关联表。</p>
+      <h3>　join(table, data, [field])　联合插入</h3>
+      <div class="param">
+        <p><em>table</em><var>[string]</var>：将要联合插入的表名。</p>
+        <p><em>data</em><var>[object]</var>：要插入的数据。</p>
+        <p><em>field</em><var>[string]</var>：分表联合字段（默认为"id"）。</p>
+      </div>
+      <pre class="source"><code>// 联表插入：
+db.data({name: "John"}) // 插入后将得到自增id值，由于下一步联表插入
+  .join('user_info', {intro: "My name is John."},'id') // 联表字段默认为id，可省略
+  .join('user_conf', {}) // data 为空，表名除了id值，其它字段全部拥有默认值
+  .insert(function(err, data){
+    console.log(err);
+    console.log(data);
+  });</code></pre>
+      <p>某些时候，表之间并没有关联字段，或者仅仅只是需要同时向多个表插入数据，也可以使用联合查询。</p>
+      <pre class="source"><code>// 多表同时插入：
+db.data({name: "John"}) 
+  .join('user_info', {id: 2, intro: "My name is Sam."}, 'id') // data 指定 id 值，覆盖插入user表时返回的自增id。
+  // .join('user_info', {intro: "My name is Sam."}, null) // 联表字段为 null ，表示不进行任何联表操作，各自分开执行插入动作。
+  .insert(function(err, data){
+    console.log(err);
+    console.log(data);
+  });</code></pre>
     </div>
 
 
