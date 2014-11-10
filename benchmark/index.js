@@ -10,10 +10,22 @@ var tribe = require('../index.js');
 //载入配置文件
 var conf = tribe.configure('./test.conf',{sync: true});
 
-// console.log(conf);
+console.log(conf);
 
 
-var db = tribe.createQuery('part');
+var db = tribe.createQuery('user');
+
+db.data({name: "John"}).insert(function(err, data){
+  console.log(err);
+  console.log(data);
+  // INSERT INTO
+},{
+  sql: 1
+});
+
+
+
+return
 
 db.where({'id >':1,num:2});
 
