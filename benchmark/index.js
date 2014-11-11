@@ -12,9 +12,21 @@ var conf = tribe.configure('./test.conf',{sync: true});
 
 // console.log(conf);
 
-
 var db = tribe.createQuery('part');
 
+
+
+db.where({id: 1}).data({title: "John001"}).join('jointb', {jointitle: "John001"}).update(function(err, data){
+  console.log(err);
+  console.log(data);
+},{
+  // obj: 1
+  // sql: 1
+});
+
+
+
+return
 
 
 db.data({title: "John"}).join('jointb', {jointitle: "John"}).insert(function(err, data){
