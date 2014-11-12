@@ -14,14 +14,27 @@ var conf = tribe.configure('./test.conf',{sync: true});
 
 var db = tribe.createQuery('part');
 
-db.data({title:'test'}).insert(function(err, data){
+
+db.where('id >=',1).where('id <',5).select(function(err, data){
+  // console.log(err);
+  console.log(data);
+},{
+  // obj: 1,
+  // sql: 1,
+});
+
+
+return
+
+
+
+db.data('title','tttt').insert(function(err, data){
   console.log(err);
   console.log(data);
 },{
   // obj: 1
   // sql: 1
 });
-
 
 return
 
