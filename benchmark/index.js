@@ -15,8 +15,8 @@ var conf = tribe.configure('./test.conf',{sync: true});
 var db = tribe.createQuery('part');
 
 
-db.where('id >=',1).where('id <',5).select(function(err, data){
-  // console.log(err);
+db.where_in('id',[2]).data({title:'2222'}).delete(function(err, data){
+  console.log(err);
   console.log(data);
 },{
   // obj: 1,
