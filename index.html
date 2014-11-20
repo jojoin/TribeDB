@@ -69,8 +69,9 @@
           <li class="line"></li>
           <li><a href="#db-reset">reset()</a>重置数据操作对象</li>
         </ul>
-        <li><a href="#destroy">destroy</a>关闭并销毁</li>
-        <li><a href="#version">version</a>版本号</li>
+        <li><a href="#destroy">destroy()</a>关闭并销毁</li>
+        <li><a href="#version">version()</a>版本号</li>
+        <li><a href="#database-design">数据库设计</a></li>
       </ul>
     </div>
 
@@ -631,16 +632,16 @@ db.where({name: 'John Smith'}).count(function(err, num){
       <p>一、user 表储存头像昵称等常用数据；二、user_info 表储存用户简介、地域等不常用信息；三、user_conf 表储存用户的选项设置。三个表都以 id 字段作为自增主键，实现关联。</p>
       <pre class="source"><code>var db = createQuery('user');</code></pre>
       <p>同时向三个表插入数据，并以字段 id 作为三个表的关联字段。可联合插入任意熟练的关联表。</p>
-      <h3>　join(table, data, [field])　联合插入</h3>
+      <h3>　join(table, data, field)　联合插入</h3>
       <div class="param">
         <p><em>table</em><var>[string]</var>：将要联合插入的表名。</p>
         <p><em>data</em><var>[object]</var>：要插入的数据。</p>
-        <p><em>field</em><var>[string]</var>：分表联合字段（默认为"id"）。</p>
+        <p><em>field</em><var>[string]</var>：分表联合字段。</p>
       </div>
       <pre class="source"><code>// 联表插入：
-db.data({name: "John"}) // 插入后将得到自增id值，由于下一步联表插入
-  .join('user_info', {intro: "My name is John."},'id') // 联表字段默认为id，可省略
-  .join('user_conf', {}) // data 为空，表名除了id值，其它字段全部拥有默认值
+db.data({name: "John"}) // 插入后将得到自增id值，由于下一步联表插入。
+  .join('user_info', {intro: "My name is John."},'id') // 联表字段为id，值取主表插入的key为id的值，不存在则取自增主键。
+  .join('user_conf', {}, 'id') // data 为空，表示除了id值，其它字段不存在或使用默认值
   .insert(function(err, data){
     console.log(err);
     console.log(data);
@@ -648,14 +649,115 @@ db.data({name: "John"}) // 插入后将得到自增id值，由于下一步联表
       <p>某些时候，表之间并没有关联字段，或者仅仅只是需要同时向多个表插入数据，也可以使用联合查询。</p>
       <pre class="source"><code>// 多表同时插入：
 db.data({name: "John"}) 
-  .join('user_info', {id: 2, intro: "My name is Sam."}, 'id') // data 指定 id 值，覆盖插入user表时返回的自增id。
-  // .join('user_info', {intro: "My name is Sam."}, null) // 联表字段为 null ，表示不进行任何联表操作，各自分开执行插入动作。
+  .join('user_info', {id: 2, intro: "My name is Sam."}) // data 指定 id 值，覆盖插入user表时返回的自增id。
+  // .join('user_info', {intro: "My name is Sam."}, null) // 联表字段为 null 或 undefined ，表示不进行任何联表操作，各自分开执行插入动作。
   .insert(function(err, data){
     console.log(err);
     console.log(data);
   });</code></pre>
+
+      <h3>　join(table, field, [limit])　联合删除</h3>
+      <div class="param">
+        <p><em>table</em><var>[string]</var>：将要联合删除的表名。</p>
+        <p><em>field</em><var>[string]</var>：where 条件指定字段。</p>
+        <p><em>limit</em><var>[number]</var>：数量限制。</p>
+      </div>
+      <pre class="source"><code>// 联表删除：
+db.where('id', 1).limit(1) // 删除 id=1 的一行
+  .join('user_info','id') // 联表字段为id，条件拷贝主表的条件"id=1"，limit也与主表相同
+  .join('user_conf', 'id', 2) // 删除条件相同，但limit=2
+  .delete(function(err, data){
+    console.log(err);
+    console.log(data);
+  });</code></pre>
+
+      <h3>　join(table, data, field, [limit])　联合更新</h3>
+      <div class="param">
+        <p><em>table</em><var>[string]</var>：将要联合更新的表名。</p>
+        <p><em>data</em><var>[object]</var>：要更新的数据。</p>
+        <p><em>field</em><var>[string]</var>：where 条件指定字段。</p>
+        <p><em>limit</em><var>[number]</var>：数量限制。</p>
+      </div>
+      <pre class="source"><code>// 联表更新：
+db.where('id', 1).data({name: "John"}) // 将用户姓名改为 John
+  .join('user_info',{intro: "my name is John"},'id') // 联表字段为id，条件拷贝主表的条件"id=1"，limit也与主表相同
+  .join('user_conf',{set: "none"},'id', 2) // 更新条件相同，但limit=2
+  .update(function(err, data){
+    console.log(err);
+    console.log(data);
+  });</code></pre>
+
+      <h3>　join(table, [columns], [field], [limit])　联合查询</h3>
+      <div class="param">
+        <p><em>table</em><var>[string]</var>：将要联合更新的表名。</p>
+        <p><em>columns</em><var>[object]</var>：要返回的字段。默认返回全部。</p>
+        <p><em>field</em><var>[string]</var>：where 条件指定字段。默认为 "id"。当where条件中不包含field字段时，从主表查询结果里取的key与field相同的值，并用其作为 where in 条件，查询其他联表，按field字段合并数据并返回。</p>
+        <p><em>limit</em><var>[number]</var>：数量限制。</p>
+      </div>
+      <pre class="source"><code>// 联表查询：
+db.where('id', 1).limit(1) // 查询id=1的用户
+  .join('user_info',null,'id') // 联表字段为id，条件拷贝主表的条件"id=1"，limit也与主表相同，columns值为null或undefined时，返回全部数据。
+  .join('user_conf',['setting','config'],'id', 2) // 查询条件相同，但limit=2，返回setting和config两个字段的内容
+  .select(function(err, data){
+    console.log(err);
+    console.log(data);
+  });</code></pre>
+
     </div>
 
+
+    <div class="example">
+      <h3>
+        <a name="destroy" href="#destroy" title="锚链接">#</a>
+        destroy()　断开数据库连接，释放资源。
+      </h3>
+      <p>如果没有其他监听端口等操作，则会退出脚本。</p>
+    </div>
+
+
+    <div class="example">
+      <h3>
+        <a name="version" href="#version" title="锚链接">#</a>
+        version()　返回当前 TribeDB 的版本号
+      </h3>
+      <pre class="source"><code>var tribe = require('tribedb');
+var version = tribe.version();
+// 1.2.5</code></pre>
+    </div>
+
+
+
+    <div class="example">
+      <h3>
+        <a name="database-design" href="#database-design" title="锚链接">#</a>
+        数据库设计
+      </h3>
+      <p>对数据表名称进行简单的修改，就能使用 TribeDB 的分表功能。数据表的扩容，分表定位查询，一切将自动完成。</p>
+      <p>将需要“横向”切分的数据表名称后面，添加 "_0" 后缀，并在配置文件中指出。</p>
+      <p>例如：将 user 表切分为每一百万用户一个表，只需设置两处：</p>
+      <p>　　一、则在数据库新建 "user_0" 表。（ _0 后缀）</p>
+      <p>　　二、在<a href="config">配置文件</a>中的<var>[table]</var>项下添加：<code class="inline">user = 100w, id</code>。</p>
+      <p>当 user_0 表数据满一百万时，TribeDB 将自动拷贝 user_0 的表结构新建名为 "user_1" 的表。用户超过两百万时，新建 "user_2"，依此类推。 </p>
+      <p>【注意】：只需要新建数据表时添加 "_0" 后缀，在代码里查询更新时，不加后缀：</p>
+      <pre class="source"><code>// user 表“横向”拆分
+// 正确：
+db.table('user').select(...);
+// 错误：
+db.table('user_0').select(...);</code></pre>
+      <p>如果需要对指定分表进行查询或维护，使用<a href="#query">query()</a>函数：</p>
+      <pre class="source"><code>// user 表“横向”拆分，查询维护指定分表
+// 正确：
+tribe.query('select * from user_0',function(){...}); // 需要加后缀，使用真实表名称。
+// 错误：
+tribe.query('select * from user',function(){...}); // 不存在user表</code></pre>
+      <p><b style="color:#555">一些建议</b></p>
+      <p>合理规划数据切分粒度，将可以为后期系统升级预留更多的空间。</p>
+      <p>比如，对于用户user表的切分，每个分表保存十万至一百万用户，是一个比较合理的划分。但对于“用户关注”表，一百万用户一个表就显得太多了，关注是一对多的关系，最终数据行数将远大于一百万。（具体数值试关注的用户量而定）。</p>
+      <p>再比如，可将一个一个超大的用户表划分为 user 、user_info 、user_conf 、user_data 四个表，用于储存不同类型或不同使用频率的用户数据。</p>
+      <p>具体实际情况需要视数据库服务器性能和产品业务需要而定。</p>
+      <p><br></p>
+      <p>- - - TribeDB 敬上 - - -</p>
+    </div>
 
 
 
