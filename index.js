@@ -39,8 +39,10 @@ var partition = require('./lib/mysql/partition.js');
 // 
 //module.exports = require('./lib/build.js');
 
-//版本
-exports.version = "0.1.1";
+//版本号
+exports.version = function(){
+	return "0.1.1";
+}
 
 //配置
 exports.configure = config.load;
