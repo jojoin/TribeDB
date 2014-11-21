@@ -17,7 +17,7 @@ TribeDB 是一个MySQL分表分库数据中间件，实现MySQL数据的分布�
 
 ### 快速上手：
 
-```
+```javascript
 
 var tribe = require('tribedb');
 
