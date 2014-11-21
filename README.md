@@ -53,7 +53,7 @@ TribeDB 通过全局唯一的表名，自动连接对应的数据库，并通过
 
 推荐采用 NPM 方式安装 TribeDB。也可以 下载源码，但需要自己处理依赖。
 
-```
+```shell
 $ npm install tribedb
 
 #tribedb@0.1.1 node_modules\tribedb
@@ -62,8 +62,7 @@ $ npm install tribedb
 
 ### 文档
 
-详细中文文档地址：http://yangjiepro.github.io/TribeDB/
-
+阅读详细API文档了解如何使用TribeDB。中文文档地址：http://yangjiepro.github.io/TribeDB/
 
 ### 其它
 
