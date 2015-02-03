@@ -1,8 +1,8 @@
 ﻿{
   "name": "tribedb",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "Unlimited expansion MySQL cluster storage system",
-  "homepage": "http://tribedb.jojoin.com/",
+  "homepage": "http://yangjiepro.github.io/TribeDB/",
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
@@ -27,7 +27,7 @@
   "author": {
     "name": "杨捷",
     "email": "yangjie@jojoin.com",
-    "url": "http://jojoin.com/user/1/"
+    "url": "https://github.com/yangjiePro"
   },
   "license": "MIT",
   "bugs": {
