@@ -1,6 +1,18 @@
 TribeDB - 分布式集群储存框架 - Node.js
 =======
 
+### 安装
+
+推荐采用 NPM 方式安装。也可以 下载源码，但需要自己处理依赖。
+
+```shell
+$ npm install tribedb
+
+#tribedb@0.1.1 node_modules\tribedb
+#└── mysql@2.5.2 (require-all@0.0.8, bignumber.js@1.4.1, readable-stream@1.1.13)
+```
+
+
 [TribeDB](http://yangjiepro.github.io/TribeDB/) 是一个MySQL分表分库数据中间件，实现MySQL数据的分布式集群储存管理。在处理海量数据、高并发访问时，获得更加优越的性能及横向扩展能力。它包含以下主要特性:
 
 1. 可伸缩、高扩展的架构
@@ -46,16 +58,6 @@ tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
 
 [TribeDB](http://yangjiepro.github.io/TribeDB/)通过全局唯一的表名，自动连接对应的数据库，并通过分表配置，将操作映射到涉及的分表，同时完成读写分离。 一切都由[TribeDB](http://yangjiepro.github.io/TribeDB/)自动完成，业务层不必关心数据的位置。当数据库负载过高需要添加服务器时，只需简单修改配置文件而不必修改业务代码，甚至将整个架构推倒重来。继续阅读本文档详细了解如何使用。
 
-### 安装
-
-推荐采用 NPM 方式安装。也可以 下载源码，但需要自己处理依赖。
-
-```shell
-$ npm install tribedb
-
-#tribedb@0.1.1 node_modules\tribedb
-#└── mysql@2.5.2 (require-all@0.0.8, bignumber.js@1.4.1, readable-stream@1.1.13)
-```
 
 ### 文档
 
