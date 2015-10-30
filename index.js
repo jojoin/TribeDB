@@ -26,67 +26,26 @@
  */
 
 
-// 加载工具方法
-var util = require('./lib/util.js');
-var config = require('./lib/config.js');
+// 配置项
+exports.config = require('./lib/config.js');
 
-var mode = require('./lib/mode.js');
+// 连接池
+exports.pool = require('./lib/pool.js');
 
-var create = require('./lib/mysql/create.js');
-var pool = require('./lib/mysql/pool.js');
-var partition = require('./lib/mysql/partition.js');
-
-// 
-//module.exports = require('./lib/build.js');
-
-//版本号
-exports.version = function(){
-	return "0.1.1";
-}
-
-//配置
-exports.configure = config.load;
-
-//exports.configure.key = config.set;
-
-//数据处理对象
-exports.createQuery = create.Create;
-
-//直接进行 sql 请求
-exports.query = pool.query;
-
-//关闭所有连接，清除所有数据
-exports.destroy = pool.destroy;
-
-//获得所有表分分区
-//exports.get_table_partition = partition.get_table_partition;
-
-//模式
-//exports.mode = mode;
-
+// 查询对象
+exports.Query = require('./lib/query.js');
 
 
 
 /********调试函数*********/
 
 
+
 // 全局 die
 global.die = function(stuff){
-	if(stuff!==undefined){
-		console.log(stuff);
-	}
-	process.exit(1);
+    if(stuff!==undefined){
+        console.log(stuff);
+    }
+    process.exit(1);
 }
-// 全局 log
-global.log = function(stuff){
-	console.log(stuff);
-}
-
-/***************************/
-
-
-
-
-
-
 

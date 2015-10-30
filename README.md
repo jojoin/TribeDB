@@ -16,28 +16,21 @@ TribeDB - 分布式集群储存框架 - Node.js
 
 ```javascript
 
-var tribe = require('tribedb');
-
-//载入配置文件，sync选项为true 表示同步读取解析配置文件
-tribe.configure('/path/to/tribe.conf',{sync:true});
-
-//通过数据库表名建立查询请求
-var db = tribe.createQuery('my_table');
-
+var tribe = require('tribedb')
+  , Query = tribe.Query;
+// 添加一个数据库配置
+tribe.config.db('db1',{user:'root'});
+// 直接执行sql
+tribe.pool.query('SELECT 1+1 AS num', { db: 'db1' }, function(err, rows, fields){
+  // 结果
+});
 //插入封装
-db.data({title:'标题'}).insert(function(err, data){
+new Query('post').data({title:'标题'}).insert(function(err, data){
   console.log(err);
   console.log(data);
 });
-
 //查询封装
-db.where('title','标题').order_by('time','DESC').limit(1).select(function(err, data){
-  console.log(err);
-  console.log(data);
-});
-
-//不使用封装的操作，直接执行sql
-tribe.query('SELECT * FROM user_0 WHERE id=1 LIMIT 1',function(err, data){
+new Query('post').where('title','标题').order_by('time','DESC').limit(1).select(function(err, data){
   console.log(err);
   console.log(data);
 });
