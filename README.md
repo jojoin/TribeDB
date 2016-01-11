@@ -2,7 +2,7 @@ TribeDB - 分布式集群储存框架 - Node.js
 =======
 
 
-[TribeDB](http://yangjiepro.github.io/TribeDB/) 是一个MySQL分表分库数据中间件，实现MySQL数据的分布式集群储存管理。在处理海量数据、高并发访问时，获得更加优越的性能及横向扩展能力。它包含以下主要特性:
+[TribeDB](http://jojoin.github.io/TribeDB/) 是一个MySQL分表分库数据中间件，实现MySQL数据的分布式集群储存管理。在处理海量数据、高并发访问时，获得更加优越的性能及横向扩展能力。它包含以下主要特性:
 
 1. 可伸缩、高扩展的架构
 2. 自动路由分库，维护数据库连接池
@@ -11,7 +11,7 @@ TribeDB - 分布式集群储存框架 - Node.js
 5. 分布式并行处理，成倍提升性能
 6. 对应用层隐藏数据来源及技术细节
 
-拥有以上特点意味着，可随时通过增加普通级别数据库服务器的方式，方便地扩展整体系统性能，而无需修改业务层架构和代码。理论上[TribeDB](http://yangjiepro.github.io/TribeDB/)的扩展能力上线在于主库单表插入性能和主从数据同步开销。通过合理设计“横向”和“纵向”分表和数据切分粒度，可轻松应对上亿级别的数据量和访问请求。
+拥有以上特点意味着，可随时通过增加普通级别数据库服务器的方式，方便地扩展整体系统性能，而无需修改业务层架构和代码。理论上[TribeDB](http://jojoin.github.io/TribeDB/)的扩展能力上线在于主库单表插入性能和主从数据同步开销。通过合理设计“横向”和“纵向”分表和数据切分粒度，可轻松应对上亿级别的数据量和访问请求。
 
 
 ### 安装
@@ -51,12 +51,12 @@ new Query('post').where('title','标题').order_by('time','DESC').limit(1).selec
     
 ```
 
-[TribeDB](http://yangjiepro.github.io/TribeDB/)通过全局唯一的表名，自动连接对应的数据库，并通过分表配置，将操作映射到涉及的分表，同时完成读写分离。 一切都由[TribeDB](http://yangjiepro.github.io/TribeDB/)自动完成，业务层不必关心数据的位置。当数据库负载过高需要添加服务器时，只需简单修改配置文件而不必修改业务代码，甚至将整个架构推倒重来。继续阅读本文档详细了解如何使用。
+[TribeDB](http://jojoin.github.io/TribeDB/)通过全局唯一的表名，自动连接对应的数据库，并通过分表配置，将操作映射到涉及的分表，同时完成读写分离。 一切都由[TribeDB](http://jojoin.github.io/TribeDB/)自动完成，业务层不必关心数据的位置。当数据库负载过高需要添加服务器时，只需简单修改配置文件而不必修改业务代码，甚至将整个架构推倒重来。继续阅读本文档详细了解如何使用。
 
 
 ### 文档
 
-阅读详细API文档了解如何使用[TribeDB](http://yangjiepro.github.io/TribeDB/)。中文文档地址：http://yangjiepro.github.io/TribeDB/
+阅读详细API文档了解如何使用[TribeDB](http://jojoin.github.io/TribeDB/)。中文文档地址：http://yangjiepro.github.io/TribeDB/
 
 ### 其它
 
@@ -66,8 +66,8 @@ new Query('post').where('title','标题').order_by('time','DESC').limit(1).selec
 
 > Email：yangjie@jojoin.com 
 
-> HomePage：http://yangjiepro.github.io/TribeDB/
+> HomePage：http://jojoin.github.io/TribeDB/
 
-> Github：https://github.com/yangjiePro/TribeDB
+> Github：https://github.com/jojoin/TribeDB
 
 
