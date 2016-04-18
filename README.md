@@ -56,7 +56,7 @@ new Query('post').where('title','标题').order_by('time','DESC').limit(1).selec
 
 ### 文档
 
-阅读详细API文档了解如何使用[TribeDB](http://jojoin.github.io/TribeDB/)。中文文档地址：http://yangjiepro.github.io/TribeDB/
+阅读详细API文档了解如何使用[TribeDB](http://jojoin.github.io/TribeDB/)。中文文档地址：http://jojoin.github.io/TribeDB/
 
 ### 其它
 
