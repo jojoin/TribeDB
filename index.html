@@ -48,6 +48,12 @@
           <li><a href="#db-data">data()</a>插入或更新的数据</li>
           <li><a href="#db-where">where()</a>查询条件</li>
           <li><a href="#db-where_in">where_in()</a></li>
+          <li class="line"></li>
+          <li><a href="#db-like">like()</a>搜索</li>
+          <li><a href="#db-or_like">or_like()</a></li>
+          <li><a href="#db-not_like">not_like()</a></li>
+          <li><a href="#db-or_not_like">or_not_like()</a></li>
+          <li class="line"></li>
           <!--
           <li><a href="#db-or_where">or_where()</a></li>
           <li><a href="#db-where_in">or_where_in()</a></li>
@@ -57,11 +63,6 @@
           <li><a href="#db-or_where_between">or_where_between()</a></li>
           <li><a href="#db-where_not_between">where_not_between()</a></li>
           <li><a href="#db-or_where_not_between">or_where_not_between()</a></li>
-          <li class="line"></li>
-          <li><a href="#db-like">like()</a>模糊查找</li>
-          <li><a href="#db-or_like">or_like()</a></li>
-          <li><a href="#db-not_like">not_like()</a></li>
-          <li><a href="#db-or_not_like">or_not_like()</a></li>
           <li class="line"></li>
           -->
           <li><a href="#db-order_by">order_by()</a>排序</li>
@@ -417,11 +418,14 @@ db.where("id between 1 and 10")
     </div>
 
 
+-->
+
+
 
     <div class="example indent">
       <h3>
         <a name="db-like" href="#db-like" title="锚链接">#</a>
-        like(field, value)　WHERE LIKE 条件
+        like(field, value, side)　WHERE LIKE 条件
       </h3>
       <div class="param">
         <p><em>field</em>：字段名。</p>
@@ -429,7 +433,7 @@ db.where("id between 1 and 10")
       </div>
       <pre class="source"><code>var db = createQuery('user');
 // 正确用法示例：
-db.like('name', '%sam%')          // WHERE name LIKE "%sam%"
+db.like('name', 'sam')          // WHERE name LIKE "%sam%"
 db.like('name', 'sam', 'both')     // WHERE name LIKE "%sam%"
 db.like('name', 'sam', 'left')     // WHERE name LIKE "sam%"
 db.like('name', 'sam', 'right')    // WHERE name LIKE "%sam"
@@ -441,25 +445,27 @@ db.where('name like "%sam%" ')
     <div class="example indent">
       <h3>
         <a name="db-or_like" href="#db-or_like" title="锚链接">#</a>
-        or_like(field, value)　WHERE LIKE OR 条件
+        or_like(field, value, side)　WHERE LIKE OR 条件
       </h3>
     </div>
 
     <div class="example indent">
       <h3>
         <a name="db-not_like" href="#db-not_like" title="锚链接">#</a>
-        not_like(field, value)　WHERE NOT LIKE 条件
+        not_like(field, value, side)　WHERE NOT LIKE 条件
       </h3>
     </div>
 
     <div class="example indent">
       <h3>
         <a name="db-or_not_like" href="#db-or_not_like" title="锚链接">#</a>
-        or_not_like(field, value)　WHERE NOT LIKE OR 条件
+        or_not_like(field, value, side)　WHERE NOT LIKE OR 条件
       </h3>
     </div>
 
--->
+
+
+
 
     <div class="example indent">
       <h3>
